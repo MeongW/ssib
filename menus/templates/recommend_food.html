@@ -1,0 +1,17 @@
+<!-- recommend_food.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>음식 추천</title>
+</head>
+<body>
+    <h1>음식 추천 페이지</h1>
+
+    {% if recommended_food %}
+        <p>추천 음식: {{ recommended_food }}</p>
+    {% else %}
+        <p>추천 음식이 없습니다.</p>
+    {% endif %}
+</body>
+</html>

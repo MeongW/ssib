@@ -1,0 +1,29 @@
+<!-- questionnaire.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Questionnaire</title>
+</head>
+<body>
+    <h1>Questionnaire</h1>
+
+    <form method="POST" action="{% url 'recommend_food' %}">
+        {% csrf_token %}
+        
+        <!-- 질문 1 -->
+        <label for="q1">질문 1:</label><br>
+        <input type="text" id="q1" name="q1"><br><br>
+
+        <!-- 질문 2 -->
+        <label for="q2">질문 2:</label><br>
+        <input type="text" id="q2" name="q2"><br><br>
+
+        <!-- 추가 질문들... -->
+
+        <!-- 제출 버튼 -->
+        <button type="submit">음식 추천 받기</button>
+    </form>
+
+</body>
+</html>

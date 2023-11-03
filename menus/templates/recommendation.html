@@ -1,0 +1,19 @@
+<!-- recommendation.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recommendation</title>
+</head>
+<body>
+    <h1>Recommendation</h1>
+
+    {% if recommended_food %}
+        <p>Recommended Food: {{ recommended_food }}</p>
+    {% else %}
+        <p>No food recommendation available.</p>
+    {% endif %}
+
+</body>
+</html>
+    
