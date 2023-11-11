@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import questions, recommend, create_question, delete_question, update_question
+from .views import questions, recommend, create_question, delete_question, update_question, index
 
 urlpatterns = [
 
@@ -11,5 +11,6 @@ urlpatterns = [
 
     path('recommend/', recommend),
 
+    path('index/', index),
 
 ]

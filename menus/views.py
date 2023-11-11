@@ -4,7 +4,13 @@ from rest_framework.decorators import api_view
 from .models import Question, Food, Choice
 from .serializers import QuestionSerializer
 
+from django.shortcuts import render
+
 import random
+
+
+def index(request):
+    return render(request, 'recommends.html')
 
 @api_view(['GET'])
 def questions(request):

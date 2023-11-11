@@ -25,7 +25,11 @@ SECRET_KEY = 'django-insecure-gx@8+bta(8_-mx7n6v_u1c2q*!^01qf^cec6pdt#815!hjf*tc
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['easymiracle.pythonanywhere.com', ]
+ALLOWED_HOSTS = [
+        'easymiracle.pythonanywhere.com', 
+        '127.0.0.1',
+        'localhost',
+]
 
 
 # Application definition
