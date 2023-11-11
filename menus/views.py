@@ -2,12 +2,19 @@ from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import Question, Food, Choice
-from .serializers import QuestionSerializer
+from .serializers import QuestionSerializer, FoodSerializer
 
 from django.shortcuts import render
 
 import random
 
+# 음식 데이터 가져오기 (GET 요청 처리)
+@api_view(['GET'])
+def get_foods(request):
+    id = request.GET.get('id')
+    foods = Food.objects.get(pk=id)
+    serializer = FoodSerializer(foods)
+    return Response(serializer.data)
 
 def index(request):
     return render(request, 'recommends.html')
@@ -75,4 +82,5 @@ def recommend(request):
                 scores[food.name]-=10
     recommended_food_name=[k for k, v in scores.items() if max(scores.values()) == v]
     recommended_food_name = random.choice(recommended_food_name)
-    return Response({'recommended_food': recommended_food_name})
+    food = Food.objects.get(name=recommended_food_name)
+    return Response({'recommended_food': food.id})

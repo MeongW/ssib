@@ -1,4 +1,5 @@
 <form method="post" action="../recommend/">
+    {% csrf_token %}
     Q1.오늘 하루는 어땠어? ✔️<br/>
     A1.좋았어 <input type="checkbox" name="responses" value="1" />
     A2.평범한 하루였어 <input type="checkbox" name="responses" value="2" />

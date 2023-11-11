@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Question, Choice
+from .models import Question, Choice, Food
 
 class ChoiceSerializer(serializers.ModelSerializer):
     class Meta:
@@ -13,3 +13,8 @@ class QuestionSerializer(serializers.ModelSerializer):
         model = Question
         depth = 1
         fields = ['id', 'question_text', 'choices']
+        
+class FoodSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Food
+        fields = '__all__'
