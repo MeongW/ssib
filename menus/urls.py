@@ -4,15 +4,15 @@ from .views import questions, recommend, create_question, delete_question, updat
 
 urlpatterns = [
 
-    path('questions/', questions),
-    path('create-question/', create_question),
-    path('delete-question/<int:question_id>/', delete_question),
-    path('update-question/<int:question_id>/', update_question),
+    path('questions', questions),
+    path('create-question', create_question),
+    path('delete-question/<int:question_id>', delete_question),
+    path('update-question/<int:question_id>', update_question),
 
     path('recommend/', recommend),
 
-    path('index/', index),
+    path('index', index),
 
-    path('foods/', foods),
+    path('foods', foods),
 
 ]
