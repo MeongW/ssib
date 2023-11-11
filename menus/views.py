@@ -10,7 +10,7 @@ import random
 
 # 음식 데이터 가져오기 (GET 요청 처리)
 @api_view(['GET'])
-def get_foods(request):
+def foods(request):
     id = request.GET.get('id')
     foods = Food.objects.get(pk=id)
     serializer = FoodSerializer(foods)
