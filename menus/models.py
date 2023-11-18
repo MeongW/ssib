@@ -2,9 +2,9 @@ from django.db import models
 
 class Food(models.Model):
     name = models.CharField(max_length=50)
-    food_image = models.ImageField(upload_to='food_images/', null=True, blank=True)
-    matching_image = models.ImageField(upload_to='food_images/', null=True, blank=True)
-    similar_image = models.ImageField(upload_to='food_images/', null=True, blank=True)
+    food1_image = models.ImageField(upload_to='food_images/', null=True, blank=True)
+    matching_image = models.CharField(max_length=255, null=True, blank=True)
+    food2_image = models.ImageField(upload_to='food_images/', null=True, blank=True)
     id = models.AutoField(primary_key=True)
     def __str__(self):
         return self.name
