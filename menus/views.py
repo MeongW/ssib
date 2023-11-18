@@ -63,7 +63,7 @@ def delete_question(request, question_id):
 
 @api_view(['POST'])
 def recommend(request):
-    responses_ids=request.data.get('responses')
+    responses_ids=request.POST.getlist('responses')
     scores={}
   
     for response_id in responses_ids:
@@ -82,23 +82,30 @@ def recommend(request):
                 scores[food.name]-=10
 
     max_score = max(scores.values())
-
     lst = []
+
     for food_name, score in scores.items():
         if score == max_score:
             maxscorelst = Food.objects.filter(name=food_name)
             lst.extend([{'name': food.name, 'id': food.id} for food in maxscorelst])
     
-    #동일한 점수 없음
+    # 동일한 점수 없음
     if len(lst) == 1:
-        topfood = Food.objects.filter(name=max(scores, key=scores.get)).first()
-        second_topfood = Food.objects.exclude(id=topfood.id).order_by('-score').first()
-        lst.append({'name': topfood.name, 'id': topfood.id})
+        topfood = lst[0]
+        second_topfood = None
 
+        # 두번째로 점수가 높은 애를 골라볼게요~ 하지만 실패
+        other_foods = Food.objects.exclude(id=topfood['id']).order_by('-name', 'id')
+        
+        if other_foods.exists():
+            second_topfood = {'name': other_foods.first().name, 'id': other_foods.first().id}
+        
         if second_topfood:
-            lst.append({'name': second_topfood.name, 'id': second_topfood.id})
+            lst.append(second_topfood)
 
-    foodlst = random.sample(lst, 2)
+    if len(lst) >= 2:
+        foodlst = random.sample(lst, 2)
+    else:
+        foodlst = lst
 
-    print(scores)
     return Response({'recommended_food': {'first': foodlst[0]['id'], 'second': foodlst[1]['id']}})
