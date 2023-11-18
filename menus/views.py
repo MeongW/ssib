@@ -81,31 +81,24 @@ def recommend(request):
             else:
                 scores[food.name]-=10
 
-    max_score = max(scores.values())
-    lst = []
+    first = ''
+    second = ''
 
-    for food_name, score in scores.items():
-        if score == max_score:
-            maxscorelst = Food.objects.filter(name=food_name)
-            lst.extend([{'name': food.name, 'id': food.id} for food in maxscorelst])
-    
-    # 동일한 점수 없음
-    if len(lst) == 1:
-        topfood = lst[0]
-        second_topfood = None
+    try:
+        recommended_food_name=[k for k, v in scores.items() if max(scores.values()) == v]
+        first, second = random.sample(recommended_food_name, 2)
+    except:
+        recommended_food_name=[k for k, v in scores.items() if max(scores.values()) == v]
 
-        # 두번째로 점수가 높은 애를 골라볼게요~ 하지만 실패
-        other_foods = Food.objects.exclude(id=topfood['id']).order_by('-name', 'id')
-        
-        if other_foods.exists():
-            second_topfood = {'name': other_foods.first().name, 'id': other_foods.first().id}
-        
-        if second_topfood:
-            lst.append(second_topfood)
+    first = recommended_food_name.pop()
+    del scores[first]
 
-    if len(lst) >= 2:
-        foodlst = random.sample(lst, 2)
-    else:
-        foodlst = lst
+    recommended_food_name = [k for k, v in scores.items() if max(scores.values()) == v]
+    second = random.choice(recommended_food_name)
 
-    return Response({'recommended_food': {'first': foodlst[0]['id'], 'second': foodlst[1]['id']}})
+
+    first_object = Food.objects.get(name=first)
+    second_object = Food.objects.get(name=second)
+
+    print(scores)
+    return Response({'recommended_food': { 'first': first_object.id, 'second': second_object.id }})
