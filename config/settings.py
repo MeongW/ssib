@@ -28,8 +28,23 @@ DEBUG = True
 ALLOWED_HOSTS = [
         'easymiracle.pythonanywhere.com', 
         '127.0.0.1',
-        'localhost',
+        'localhost:8000',
+        'localhost:3000',
 ]
+
+#CORS_ORIGIN_WHITELIST = [
+#        'easymiracle.pythonanywhere.com',
+#        'http://127.0.0.1:3000',
+#        'http://127.0.0.1',
+#        'http://127.0.0.1:8000',
+#        'http://localhost:3000',
+#        'http://locahost:8000',
+#        'http://localhost',
+#        'https://ssib.netlify.app',
+#]
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOW_CREDENTIALS = True
 
 # Application definition
 
@@ -49,6 +64,8 @@ PROJECT_APPS = [
 THIRD_PARTY_APPS = [
     # REST_API
     'rest_framework',
+
+    'corsheaders',
 ]
 
 INSTALLED_APPS = INSTALLED_APPS + PROJECT_APPS + THIRD_PARTY_APPS
@@ -61,6 +78,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'

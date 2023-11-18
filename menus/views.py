@@ -90,17 +90,15 @@ def recommend(request):
             lst.extend([{'name': food.name, 'id': food.id} for food in maxscorelst])
     
     #동일한 점수 없음
-    if not lst:
+    if len(lst) == 1:
         topfood = Food.objects.filter(name=max(scores, key=scores.get)).first()
-        second_topfood = Food.objects.exclude(id=topfood.id).order_by('-name').first()
-        lst = [{'name': topfood.name, 'id': topfood.id}]
+        second_topfood = Food.objects.exclude(id=topfood.id).order_by('-score').first()
+        lst.append({'name': topfood.name, 'id': topfood.id})
 
         if second_topfood:
             lst.append({'name': second_topfood.name, 'id': second_topfood.id})
 
-    if len(lst) >= 2:
-        foodlst = random.sample(lst, 2)
-    else:
-        foodlst = lst
+    foodlst = random.sample(lst, 2)
 
-    return Response({'recommended_foods': foodlst})
+    print(scores)
+    return Response({'recommended_food': {'first': foodlst[0]['id'], 'second': foodlst[1]['id']}})

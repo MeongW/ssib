@@ -9,9 +9,9 @@ urlpatterns = [
     path('delete-question/<int:question_id>', delete_question),
     path('update-question/<int:question_id>', update_question),
 
-    path('recommend', recommend),
+    path('recommend/', recommend),
 
-    path('index', index),
+    path('index/', index),
 
     path('foods', foods),
 
