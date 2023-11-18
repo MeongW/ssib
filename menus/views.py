@@ -80,7 +80,27 @@ def recommend(request):
                 scores[food.name]=-10 # 해당되지 않으면 -10점 부여
             else:
                 scores[food.name]-=10
-    recommended_food_name=[k for k, v in scores.items() if max(scores.values()) == v]
-    recommended_food_name = random.choice(recommended_food_name)
-    food = Food.objects.get(name=recommended_food_name)
-    return Response({'recommended_food': food.id})
+
+    max_score = max(scores.values())
+
+    lst = []
+    for food_name, score in scores.items():
+        if score == max_score:
+            maxscorelst = Food.objects.filter(name=food_name)
+            lst.extend([{'name': food.name, 'id': food.id} for food in maxscorelst])
+    
+    #동일한 점수 없음
+    if not lst:
+        topfood = Food.objects.filter(name=max(scores, key=scores.get)).first()
+        second_topfood = Food.objects.exclude(id=topfood.id).order_by('-name').first()
+        lst = [{'name': topfood.name, 'id': topfood.id}]
+
+        if second_topfood:
+            lst.append({'name': second_topfood.name, 'id': second_topfood.id})
+
+    if len(lst) >= 2:
+        foodlst = random.sample(lst, 2)
+    else:
+        foodlst = lst
+
+    return Response({'recommended_foods': foodlst})
