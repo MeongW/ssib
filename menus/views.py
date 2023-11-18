@@ -63,7 +63,7 @@ def delete_question(request, question_id):
 
 @api_view(['POST'])
 def recommend(request):
-    responses_ids=request.POST.getlist('responses')
+    responses_ids=request.data.get('responses')
     scores={}
   
     for response_id in responses_ids:
